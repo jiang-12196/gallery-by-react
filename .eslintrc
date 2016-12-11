@@ -19,17 +19,17 @@
   },
   "rules": {
     "comma-dangle": 1,
-    "quotes": [ 1, "single" ],
-    "no-undef": 1,
+    "quotes": [ 0, "single" ],
+    "no-undef": 0,
     "global-strict": 0,
-    "no-extra-semi": 1,
+    "no-extra-semi": 0,
     "no-underscore-dangle": 0,
     "no-console": 0,
     "no-unused-vars": 0,
-    "no-trailing-spaces": [1, { "skipBlankLines": true }],
-    "no-unreachable": 1,
+    "no-trailing-spaces": [0, { "skipBlankLines": true }],
+    "no-unreachable": 0,
     "no-alert": 0,
-    "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1
+    "react/jsx-uses-react": 0,
+    "react/jsx-uses-vars": 0
   }
 }

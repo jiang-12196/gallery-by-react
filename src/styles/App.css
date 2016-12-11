@@ -22,6 +22,20 @@ html, body {
   overflow: hidden;
   background-color: #ddd;
 }
+.img-figure {
+  width: 240px;
+  height: 260px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+.img-title {
+  text-align: center;
+  margin: 2px 0 0;
+  color: #a7a0a2;
+  font-size:12px;
+}
 
 .controller-nav {
   position: absolute;
