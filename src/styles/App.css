@@ -23,10 +23,11 @@ html, body {
   background-color: #ddd;
 }
 .img-figure {
-  width: 240px;
+  position: absolute;
+  width: 220px;
   height: 260px;
   margin: 20px;
-  padding: 20px;
+  padding: 10px 10px 30px 10px;
   background-color: #fff;
   box-sizing: border-box;
 }
