@@ -3,6 +3,7 @@ require('styles/App.css');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ImgFigure } from './ImgFigure';
 
 // 获取图片相关的数据
 let imageDatas = require('../data/inputDatas.json');
@@ -16,35 +17,6 @@ function genImageURL(imageDatasArr) {
 }
 imageDatas = genImageURL(imageDatas);
 
-let ImgFigure = React.createClass ({
-  render : function () {
-
-    let styleObj = {};
-    if (this.props.arrange.pos) {
-      styleObj = this.props.arrange.pos
-    }
-
-    if(this.props.arrange.rotate) {
-      // styleObj['-webkit-transform'] =  'rotate(' + this.props.arrange.rotate + 'deg)';
-      (['MozTransform', 'msTransform', '-webkit-transform', 'transform']).forEach(
-        function (value) {
-          styleObj[value] = 'rotate(' + this.props.arrange.rotate + 'deg)';
-        }.bind(this)
-      );
-    }
-
-    return(
-      <figure className="img-figure" style={styleObj}>
-        <img src={this.props.data.imgURL}
-              alt={this.props.data.title}/>
-        <figcaption>
-          <h2 className="img-title">{this.props.data.title}</h2>
-        </figcaption>
-      </figure>
-    )
-  }
-});
-
 let getRangeRandom = function (low, high) {
   return  Math.ceil(Math.random()*(high-low)+low);
 };
@@ -52,6 +24,7 @@ let getRangeRandom = function (low, high) {
 let get30DegRandom = function () {
   return ((Math.random()>0.5?'':'-')+Math.ceil(Math.random()*30))
 };
+
 
 
 class AppComponent extends React.Component {
@@ -74,9 +47,20 @@ class AppComponent extends React.Component {
       }
     };
     this.state = {
-      imgsArrangeArr:[]
+      imgsArrangeArr:[
+        /*
+        {post:{
+          top:0,
+          left:0
+        },
+        rotate:0,
+        isInverse:false
+        }
+         */
+      ]
     }
   }
+
 
   //组件加载以后，为每张图片计算位置
   componentDidMount(){
@@ -156,7 +140,7 @@ class AppComponent extends React.Component {
           left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
         },
         rotate:get30DegRandom()
-      }
+      };
       console.log(imgsArrangeTopArr[index])
     });
 
@@ -187,6 +171,23 @@ class AppComponent extends React.Component {
     })
   }
 
+  /*
+   * 翻转图片
+   * @param index 传入当前被执行inverse操作的图片对应的图片信息数组的index值
+   * @returns {Function} 这是一个闭包函数, 其内return一个真正待被执行的函数
+   */
+  inverse (index) {
+  return function () {
+    var imgsArrangeArr = this.state.imgsArrangeArr;
+
+    imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+
+    this.setState({
+      imgsArrangeArr: imgsArrangeArr
+    });
+  }.bind(this);
+}
+
   render() {
 
     // let controllerUnits = [],
@@ -198,11 +199,14 @@ class AppComponent extends React.Component {
             left: 0,
             top: 0
           },
-          rotate:0
+          rotate:0,
+          isInverse:false
         };
       }
       imgFigures.push(<ImgFigure data={value}
-                    ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>)
+                    ref={'imgFigure'+index}
+                   arrange={this.state.imgsArrangeArr[index]}
+      />);
       }.bind(this)
     );
     return (
